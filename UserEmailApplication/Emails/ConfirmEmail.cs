@@ -1,15 +1,16 @@
 namespace UserEmailApplication.Emails;
 
-public class ConfirmEmail : IEmailStrategy
+public class ConfirmEmail : IEmail
 {
-    public EmailType EmailType => EmailType.ConfirmEmail;
+    public string Name { get; set; }
+    public string Email { get; set; }
     
-    public EmailMessage GetMessage()
+    public Dictionary<string, object> Parameters()
     {
-        return new EmailMessage
+        return new Dictionary<string, object>()
         {
-            Subject = "Confirm your email",
-            Body = "Your account has been confirmed."
+            { "Name", Name },
+            { "Email", Email }
         };
     }
 }

@@ -1,15 +1,14 @@
 namespace UserEmailApplication.Emails;
 
-public class ForgotPasswordEmail : IEmailStrategy
+public class ForgotPasswordEmail : IEmail
 {
-    public EmailType EmailType => EmailType.ForgotPasswordEmail;
-    
-    public EmailMessage GetMessage()
+    public string RecoverPasswordUrl { get; set; }
+
+    public Dictionary<string, object> Parameters()
     {
-        return new EmailMessage()
+        return new Dictionary<string, object>()
         {
-            Subject = "Reset Password",
-            Body = "This is the email to reset your password."
+            { "RecoverPasswordUrl", RecoverPasswordUrl }
         };
     }
 }

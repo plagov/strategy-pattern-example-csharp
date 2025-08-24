@@ -1,15 +1,14 @@
 namespace UserEmailApplication.Emails;
 
-public class WelcomeEmail : IEmailStrategy
+public class WelcomeEmail : IEmail
 {
-    public EmailType EmailType => EmailType.WelcomeEmail;
-
-    public EmailMessage GetMessage()
+    public string Name {get; set;}
+    
+    public Dictionary<string, object> Parameters()
     {
-        return new EmailMessage
+        return new Dictionary<string, object>()
         {
-            Subject = "Welcome",
-            Body = "Welcome to our service."
+            { "Name", Name },
         };
     }
 }

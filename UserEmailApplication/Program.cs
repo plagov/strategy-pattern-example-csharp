@@ -6,24 +6,20 @@ public static class Program
 {
     public static void Main(string[] args)
     {
-        var emailStrategies = new List<IEmailStrategy>
-        {
-            new ConfirmEmail(),
-            new ForgotPasswordEmail(),
-            new WelcomeEmail()
-        };
+        var repository = new TemplateRepository();
+        var emailService = new EmailService();
 
-        var emailBuilder = new EmailBuilder(emailStrategies);
+        var welcomeEmail = new WelcomeEmail { Name = "John Doe" };
+        var forgotPasswordEmail = new ForgotPasswordEmail { RecoverPasswordUrl = "https://example.com/recover_email" };
+        var confirmEmail = new ConfirmEmail() { Email = "dev@null.io", Name = "Adam Smith" };
 
-        var userService = new UserService(emailBuilder);
+        Console.WriteLine("Send welcome email");
+        emailService.SendEmail(repository.GetBody(welcomeEmail));
 
-        Console.WriteLine("Will print the confirm email now");
-        userService.PrintConfirmEmail();
+        Console.WriteLine("Send forgot password email");
+        emailService.SendEmail(repository.GetBody(forgotPasswordEmail));
 
-        Console.WriteLine("Will print the forgot password email now");
-        userService.PrintForgotPasswordEmail();
-        
-        Console.WriteLine("Will print the welcome email now");
-        userService.PrintWelcomeEmail();
+        Console.WriteLine("Send confirmation email");
+        emailService.SendEmail(repository.GetBody(confirmEmail));
     }
 }
